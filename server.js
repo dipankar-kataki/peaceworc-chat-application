@@ -1,22 +1,38 @@
 const express = require('express')
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-
 const app = express()
-const port = process.env.port || 3000
+const http = require('http').createServer(app)
 
-//Creating Http server
-const http = createServer(app)
+const PORT = process.env.PORT || 3000
 
-app.get('/', (req, res) => {
-    res.send('Welcome! Secure Server Connected')
+http.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })
 
-//Socket Connection
-const io = new Server(http, { serveClient: false });
+app.use(express.static(__dirname + '/public'))
 
-io.on("connection", (socket) => {
-    console.log('Connected To Socket Server')
-});
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html')
+})
 
-http.listen(port);
+// Socket 
+const io = require('socket.io')(http)
+
+io.on('connection', (socket) => {
+    console.log('Connected... To Websocket')
+    console.log('Socket Id', socket.id)
+    // socket.on('message', (msg) => {
+    //     socket.broadcast.emit('message', msg)
+    // })
+    
+})
+
+
+// client-side
+// io.on("connect", () => {
+//     // socket.broadcast.emit('test-msg', hello)
+   
+//     io.emit('test-msg','Free portobond')
+// });
+
+
+  
