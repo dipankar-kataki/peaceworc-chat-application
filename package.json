@@ -1,0 +1,19 @@
+{
+  "name": "peaceworc-chat-application",
+  "version": "1.0.0",
+  "description": "This project contains code that is used for making a chat application which will be used to communicate between a caregiver and an agency",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server"
+  },
+  "author": "Dipankar Kataki, Backend Developer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.1",
+    "socket.io-client": "^4.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
