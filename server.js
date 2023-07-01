@@ -23,16 +23,31 @@ io.sockets.on('connection', (socket) => {
     // socket.on('message', (msg) => {
     //     socket.broadcast.emit('message', msg)
     // })
-    let data = {
-        msg : 'Hello MADAFUCKER'
-    }
-    socket.emit('welcome', data)
+    
+    // socket.emit('welcome', data)
 
-    socket.on('chat', function(response) {
-        console.log('subscribe trigged')
-        const room_data = response
-        console.log('Response From Android ==>',room_data)
+    //Sending Message
+
+    socket.on('sendMessage', function(msg){
+        // let messageForSending = JSON.parse(msg);
+        let data = {
+            chatResponse:{
+                image:msg.image,
+                msg : msg.msg,
+                time: msg.time,
+                userId: msg.userId
+            }
+            
+        }
+        // console.log(data)
+        socket.broadcast.emit('receiveMessage', data)
     })
+
+    // socket.on('chat', function(response) {
+    //     console.log('subscribe trigged')
+    //     const room_data = response
+    //     console.log('Response From Android ==>',room_data)
+    // })
 })
 
 
