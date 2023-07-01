@@ -17,14 +17,25 @@ app.get('/', (req, res) => {
 // Socket 
 const io = require('socket.io')(http)
 
-io.on('connection', (socket) => {
+io.sockets.on('connection', (socket) => {
     console.log('Connected... To Websocket')
     console.log('Socket Id', socket.id)
     // socket.on('message', (msg) => {
     //     socket.broadcast.emit('message', msg)
     // })
-    
+    let data = {
+        msg : 'Hello MADAFUCKER'
+    }
+    socket.emit('welcome', data)
+
+    socket.on('chat', function(response) {
+        console.log('subscribe trigged')
+        const room_data = response
+        console.log('Response From Android ==>',room_data)
+    })
 })
+
+
 
 
 // client-side
