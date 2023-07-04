@@ -4,6 +4,7 @@
   "description": "This project contains code that is used for making a chat application which will be used to communicate between a caregiver and an agency",
   "main": "server.js",
   "scripts": {
+    "start": "node server",
     "dev": "nodemon server"
   },
   "author": "Dipankar Kataki, Backend Developer",
