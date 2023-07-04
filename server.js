@@ -38,7 +38,8 @@ io.sockets.on('connection', (socket) => {
                 image:msg.image,
                 msg : msg.msg,
                 time: msg.time,
-                userId: msg.userId
+                userId: msg.userId,
+                targetId: msg.targetId
             }
             
         }
