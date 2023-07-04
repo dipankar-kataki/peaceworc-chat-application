@@ -23,8 +23,10 @@ let clients = {};
 io.sockets.on('connection', (socket) => {
     console.log('Connected... To Websocket')
     socket.on('signin', function(id){
-        clients[id] = socket;
-        console.log('Clients ==> ', clients)
+        if(! clients.hasOwnProperty(clients[id])){
+            clients[id] = socket;
+        }
+        // console.log('Clients ==> ', clients)
 
     })
 
@@ -32,6 +34,7 @@ io.sockets.on('connection', (socket) => {
 
     //Sending Message
     socket.on('sendMessage', function(msg){
+        console.log('Message Received ====>', msg)
         let targetId = msg.targetId;
         let data = {
             chatResponse:{
@@ -45,7 +48,11 @@ io.sockets.on('connection', (socket) => {
         }
         if(clients[targetId]){
             clients[targetId].emit('receiveMessage', data)
+        }else{
+            console.log('Oops! Target-Id Not Found. Message Not Sent.')
         }
+
+        
     })
 })
 
