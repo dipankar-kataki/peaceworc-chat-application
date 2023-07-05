@@ -35,7 +35,7 @@ io.sockets.on('connection', (socket) => {
 
     //Sending Message
     socket.on('sendMessage', function(msg){
-        console.log('Message Received ====>', msg)
+        
         let targetId = msg.targetId;
         let data = {
             chatResponse:{
@@ -44,29 +44,32 @@ io.sockets.on('connection', (socket) => {
                 time: msg.time,
                 userId: msg.userId,
                 targetId: msg.targetId,
-                token: msg.token
+                token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
             }
             
         }
+        console.log('Message Received ====>', data)
 
-        // const messageData = {
-        //     sent_by: msg.userId,
-        //     received_by: msg.targetId,
-        //     message:  msg.msg,
-        //     image_path:  msg.image,
-        // };
+        const accessToken = data.chatResponse.token;
+        const apiUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/upload-message';
+        const headers = {
+            Authorization: 'Bearer ' + accessToken,
+            'Content-Type': 'application/json',
+        };
+
+        
+
+
         if(clients[targetId]){
             clients[targetId].emit('receiveMessage', data)
 
-            // // Send the POST request
-            // axios.post('http://localhost:8000/chatting/upload-message', data)
-            // .then(response => {
-            //     console.log('Message sent successfully');
-            //     console.log('Response From Laravel ==>',response.data);
-            // })
-            // .catch(error => {
-            //     console.error('Error sending message:', error.response.data);
-            // });
+            axios.post(apiUrl, data, {headers} )
+            .then(response => {
+                console.log('Response From Laravel ==>',response.data);
+            })
+            .catch(error => {
+                console.error('Error sending message:', error.response.data);
+            });
         }else{
             console.log('Oops! Target-Id Not Found. Message Not Sent.')
         }
