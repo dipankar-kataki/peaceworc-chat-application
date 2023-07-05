@@ -20,6 +20,8 @@ http.listen(PORT, () => {
 // Socket 
 const io = require('socket.io')(http)
 let clients = {};
+let typing=false;
+let timeout=undefined;
 
 io.sockets.on('connection', (socket) => {
     console.log('Connected... To Websocket')
@@ -32,6 +34,16 @@ io.sockets.on('connection', (socket) => {
     })
 
     console.log('======================= ********************* ===================================')
+
+    //Typing Indication
+    // socket.on('typing', (typing)=>{
+    //     console.log('Typing Data===>',typing)
+    //     if(typing==true){
+    //         socket.emit('displayTyping', typing)
+    //     }else{
+    //         socket.emit('displayTyping', typing)
+    //     }
+    // })
 
     //Sending Message
     socket.on('sendMessage', function(msg){
