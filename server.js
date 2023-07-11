@@ -56,16 +56,17 @@ io.sockets.on('connection', (socket) => {
                 time: msg.time,
                 userId: msg.userId,
                 targetId: msg.targetId,
-                token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
+                // token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
+                token: msg.token
             }
             
         }
         console.log('Message Received ====>', data)
 
         const accessToken = data.chatResponse.token;
-        const apiUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/upload-message';
+        const apiUrl = 'http://143.110.244.161/api/caregiver/chatting/upload-message';
         const headers = {
-            Authorization: 'Bearer ' + accessToken,
+            Authorization: accessToken,
             'Content-Type': 'application/json',
         };
 
