@@ -35,6 +35,15 @@ io.sockets.on('connection', (socket) => {
 
     console.log('======================= ********************* ===================================')
 
+    // const apiUrl = 'http://143.110.244.161/api/caregiver/chatting/upload-message';
+    const apiMessageUploadUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/upload-message';
+    const apiMessageSeenUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/update-message';
+
+    const headers = {
+        Authorization: null,
+        'Content-Type': 'application/json',
+    };
+
     //Typing Indication
     // socket.on('typing', (typing)=>{
     //     console.log('Typing Data===>',typing)
@@ -56,19 +65,18 @@ io.sockets.on('connection', (socket) => {
                 time: msg.time,
                 userId: msg.userId,
                 targetId: msg.targetId,
-                // token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
-                token: msg.token
+                jobId: msg.jobId,
+                messageId: msg.messageId,
+                token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
+                // token: msg.token
             }
             
         }
         console.log('Message Received ====>', data)
 
         const accessToken = data.chatResponse.token;
-        const apiUrl = 'http://143.110.244.161/api/caregiver/chatting/upload-message';
-        const headers = {
-            Authorization: accessToken,
-            'Content-Type': 'application/json',
-        };
+        
+        headers.Authorization = accessToken
 
         
 
@@ -76,7 +84,7 @@ io.sockets.on('connection', (socket) => {
         if(clients[targetId]){
             clients[targetId].emit('receiveMessage', data)
 
-            axios.post(apiUrl, data, {headers} )
+            axios.post(apiMessageUploadUrl, data, {headers} )
             .then(response => {
                 console.log('Response From Laravel ==>',response.data);
             })
@@ -88,6 +96,28 @@ io.sockets.on('connection', (socket) => {
         }
 
         
+    })
+
+    socket.on('isMessageSeen', function(seenData){
+
+        let data = {
+            messageId : seenData.messageId,
+            messageSeen: true
+        }
+
+        clients[seenData.targetId].emit('messageAck', data)
+
+        if(seenData.targetId != null || seenData.targetId != ''){
+
+            axios.post(apiMessageSeenUrl, seenData, {headers} )
+            .then(response => {
+                console.log('Response From Laravel For Seen ==>',response.data);
+            })
+            .catch(error => {
+                console.error('Error sending message:', error.response.data);
+            });
+
+        }
     })
 })
 
