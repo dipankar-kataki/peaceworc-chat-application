@@ -36,8 +36,11 @@ io.sockets.on('connection', (socket) => {
     console.log('======================= ********************* ===================================')
 
     // const apiUrl = 'http://143.110.244.161/api/caregiver/chatting/upload-message';
-    const apiMessageUploadUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/upload-message';
-    const apiMessageSeenUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/update-message';
+    // const apiMessageUploadUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/upload-message';
+    // const apiMessageSeenUrl = 'http://127.0.0.1:8000/api/caregiver/chatting/update-message';
+
+    const apiMessageUploadUrl = 'http://143.110.244.161/api/caregiver/chatting/upload-message';
+    const apiMessageSeenUrl = 'http://143.110.244.161/api/caregiver/chatting/update-message';
 
     const headers = {
         Authorization: null,
