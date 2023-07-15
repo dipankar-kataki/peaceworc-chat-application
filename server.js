@@ -114,7 +114,7 @@ io.sockets.on('connection', (socket) => {
                 console.log('Response From Laravel For Seen ==>',response.data);
             })
             .catch(error => {
-                console.error('Error sending message:', error.response.data);
+                console.error('Error sending message:', error.response);
             });
 
         }
