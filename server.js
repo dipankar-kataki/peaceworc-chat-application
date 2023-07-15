@@ -70,8 +70,8 @@ io.sockets.on('connection', (socket) => {
                 targetId: msg.targetId,
                 jobId: msg.jobId,
                 messageId: msg.messageId,
-                token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
-                // token: msg.token
+                // token: `Bearer 2|RR8vxXeZAD4e9W23RgIvgpifX2MCtPFcRfQ2AidQ`
+                token: msg.token
             }
             
         }
