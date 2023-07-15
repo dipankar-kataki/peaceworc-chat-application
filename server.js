@@ -89,7 +89,7 @@ io.sockets.on('connection', (socket) => {
                 console.log('Response From Laravel ==>',response.data);
             })
             .catch(error => {
-                console.error('Error sending message:', error.response.data);
+                console.error('Error sending message:', error.response);
             });
         }else{
             console.log('Oops! Target-Id Not Found. Message Not Sent.')
